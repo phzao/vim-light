@@ -65,10 +65,12 @@ call plug#end()
 
 nmap <F6> :NERDTreeToggle<CR>
 
-set langmenu=it_IT.UTF-8
-language messages it_IT.UTF-8
+set langmenu=en_US.UTF-8
+language messages en_US.UTF-8
 
-set shell=/bin/zsh
+if !empty(glob("/bin/zsh"))
+  set shell=/bin/zsh
+endif
 set nocompatible
 
 if has("mouse_sgr")
