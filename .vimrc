@@ -22,6 +22,9 @@ set backspace=2
 set backspace=indent,eol,start
 set hlsearch
 
+set tabstop=2
+set shiftwidth=2
+
 function! GitBranch()
     return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
 endfunction
@@ -33,15 +36,19 @@ endfunction
 
 map <silent> <Leader>d <esc>:call UiToggle()<CR>:bd<CR>:call UiToggle()<CR>
 let g:TailMinusF_Center_Win = 1
-set stl=%f\ %h\ %m\ %r\ %{StatuslineGit()}%=\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
+"set stl=%f\ %h\ %m\ %r\ %{StatuslineGit()}%=\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
 
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive'
 
+Plug 'eliba2/vim-node-inspect'
+
 Plug 'preservim/nerdtree'
 
 Plug 'ryanoasis/vim-devicons'
+
+Plug 'preservim/nerdcommenter'
 
 Plug 'prettier/vim-prettier', { 'do': 'yarn install',  'branch': 'release/0.x'  }
 
@@ -271,3 +278,45 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+set listchars=
+"set listchars+=tab:𐄙\ 
+set listchars+=tab:\ \ 
+set listchars+=trail:·
+set listchars+=extends:»
+set listchars+=precedes:«
+set listchars+=nbsp:⣿
+
+set statusline+=%F\ %r\ %r\ Line:[%l]\:Column[%c]
+
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+
+nnoremap <silent><F4> :NodeInspectStart<cr>
+nnoremap <silent><F5> :NodeInspectRun<cr>
+nnoremap <silent><F3> :NodeInspectConnect("127.0.0.1:9229")<cr>
+nnoremap <silent><F7> :NodeInspectStepInto<cr>
+nnoremap <silent><F8> :NodeInspectStepOver<cr>
+nnoremap <silent><F9> :NodeInspectToggleBreakpoint<cr>
+nnoremap <silent><F10> :NodeInspectStop<cr>
+nnoremap <silent><F12> :NodeInspectRemoveAllBreakpoints<cr>
+
+let NERDTreeShowHidden=1
